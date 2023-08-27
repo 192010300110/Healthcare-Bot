@@ -1,0 +1,61 @@
+classDiagram
+    class Bot{
+        +receive_call()
+        +initiate_call(phone_number: str)
+        +process_speech(speech: str) -> str
+        +fetch_appointment_data() -> dict
+        +book_appointment(appointment_data: dict) -> bool
+        +handle_delayed_response() -> bool
+        +transcribe_conversation(conversation: str) -> bool
+        +schedule_assistance() -> str
+        +transfer_to_human()
+    }
+    class Database{
+        +fetch_data(query: str) -> dict
+        +insert_data(data: dict) -> bool
+    }
+    class Scheduler{
+        +get_available_slots() -> list
+        +reschedule_appointment(appointment_id: int, new_slot: str) -> bool
+        +cancel_appointment(appointment_id: int) -> bool
+        +send_reminder(appointment_id: int) -> bool
+    }
+    class Transcription{
+        +store_transcription(transcription: str) -> bool
+    }
+    class SpeechToText{
+        +convert_speech_to_text(speech: str) -> str
+    }
+    class TextToSpeech{
+        +convert_text_to_speech(text: str) -> str
+    }
+    class API{
+        +get_appointment_data() -> dict
+        +book_appointment(appointment_data: dict) -> bool
+    }
+    class TwilioIntegration{
+        +initiate_call(phone_number: str) -> bool
+        +end_call() -> bool
+    }
+    class CeleryTasks{
+        +initiate_callback() -> bool
+    }
+    class Models{
+        +Appointment
+        +Patient
+    }
+    class Utils{
+        +authenticate_user(token: str) -> bool
+    }
+    Bot "1" -- "1" Database: has
+    Bot "1" -- "1" Scheduler: has
+    Bot "1" -- "1" Transcription: has
+    Bot "1" -- "1" SpeechToText: has
+    Bot "1" -- "1" TextToSpeech: has
+    Bot "1" -- "1" API: has
+    Bot "1" -- "1" TwilioIntegration: has
+    Bot "1" -- "1" CeleryTasks: has
+    Database "1" -- "1" Models: has
+    API "1" -- "1" Models: has
+    API "1" -- "1" Utils: has
+    Scheduler "1" -- "1" Models: has
